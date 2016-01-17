@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="600.0" prefWidth="800.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm.customer.CustomerHomeCtrl">
+   <children>
+      <MenuBar fx:id="menu">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#back" text="Back" />
+                  <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#about" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="নিয়মিত ক্রেতা">
+         <font>
+            <Font name="SolaimanLipi" size="24.0" />
+         </font></Text>
+      <ComboBox fx:id="customerAddress" minWidth="200.0" onAction="#processName" prefWidth="150.0" promptText="Select Address" />
+      <ComboBox fx:id="customerName" minWidth="200.0" onAction="#selectName" prefWidth="150.0" promptText="Select Name" />
+      <Button fx:id="viewBtn" mnemonicParsing="false" onAction="#showData" text="View Data">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </children>
+</VBox>

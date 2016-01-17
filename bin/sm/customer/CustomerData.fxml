@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="600.0" prefWidth="800.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm.customer.CustomerDataCtrl">
+   <children>
+      <MenuBar fx:id="menu">
+         <menus>
+            <Menu mnemonicParsing="false" text="File">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#back" text="Back" />
+                  <MenuItem mnemonicParsing="false" onAction="#editCustomer" text="Edit Customer Info" />
+                  <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#about" text="About" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <GridPane>
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="395.0" minWidth="10.0" prefWidth="103.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="697.0" minWidth="10.0" prefWidth="697.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="নাম">
+               <font>
+                  <Font name="SolaimanLipi" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="name" text=": নাম" GridPane.columnIndex="1">
+               <font>
+                  <Font name="SolaimanLipi" size="16.0" />
+               </font>
+            </Label>
+            <Label text="মোবাইল" GridPane.rowIndex="1">
+               <font>
+                  <Font name="SolaimanLipi" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="mobile" text=": 017123456" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="SolaimanLipi" size="16.0" />
+               </font>
+            </Label>
+            <Label text="ঠিকানা" GridPane.rowIndex="2">
+               <font>
+                  <Font name="SolaimanLipi" size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="address" text=": কাশিনাথপুর" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="SolaimanLipi" size="16.0" />
+               </font>
+            </Label>
+         </children>
+         <VBox.margin>
+            <Insets left="10.0" />
+         </VBox.margin>
+      </GridPane>
+      <TableView fx:id="table" editable="true" prefHeight="390.0" prefWidth="600.0" tableMenuButtonVisible="true">
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+         <columns>
+            <TableColumn fx:id="dateColumn" prefWidth="75.0" text="তারিখ" />
+            <TableColumn fx:id="productColumn" prefWidth="75.0" text="পণ্য" />
+            <TableColumn fx:id="quantityColumn" prefWidth="75.0" text="পরিমাণ" />
+            <TableColumn fx:id="priceColumn" prefWidth="75.0" text="মূল্য" />
+            <TableColumn fx:id="totalColumn" prefWidth="75.0" text="মোট মূল্য" />
+            <TableColumn fx:id="depositColumn" prefWidth="75.0" text="জমা" />
+            <TableColumn fx:id="restColumn" prefWidth="75.0" text="পাওনা" />
+            <TableColumn fx:id="checkColumn" prefWidth="75.0" text="নগদ / বাকী" />
+            <TableColumn fx:id="transColumn" prefWidth="75.0" text="কোড" />
+         </columns>
+      </TableView>
+      <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="600.0" spacing="10.0">
+         <children>
+            <DatePicker fx:id="datePicker" editable="false" minWidth="105.0" promptText="01/12/2015" showWeekNumbers="true" />
+            <ComboBox fx:id="productSelect" prefWidth="150.0" promptText="Select Product" />
+            <TextField fx:id="quantity" minWidth="105.0" promptText="পরিমাণ">
+               <font>
+                  <Font name="SolaimanLipi" size="14.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="deposit" layoutX="128.0" layoutY="19.0" minWidth="105.0" promptText="জমা">
+               <font>
+                  <Font name="SolaimanLipi" size="14.0" />
+               </font>
+            </TextField>
+            <CheckBox fx:id="check" minWidth="60.0" mnemonicParsing="false" text="বাকী?">
+               <font>
+                  <Font name="SolaimanLipi" size="14.0" />
+               </font>
+            </CheckBox>
+            <Button fx:id="addTransactionBtn" minWidth="60.0" mnemonicParsing="false" onAction="#addTransaction" text="Add" />
+            <Button fx:id="deleteTransactionBtn" minWidth="60.0" mnemonicParsing="false" onAction="#deleteTransaction" text="Delete" />
+         </children>
+         <padding>
+            <Insets left="5.0" right="5.0" />
+         </padding>
+      </HBox>
+   </children>
+</VBox>

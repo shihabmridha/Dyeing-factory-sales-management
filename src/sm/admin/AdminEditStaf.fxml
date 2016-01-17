@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" spacing="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm.admin.AdminEditStaf">
+   <children>
+      <MenuBar fx:id="menu">
+         <menus>
+            <Menu mnemonicParsing="false" text="File">
+               <items>
+                  <MenuItem fx:id="back" mnemonicParsing="false" onAction="#back" text="Back" />
+                  <MenuItem fx:id="close" mnemonicParsing="false" onAction="#close" text="Close" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+               <items>
+                  <MenuItem fx:id="about" mnemonicParsing="false" onAction="#about" text="About" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="এডিট অ্যাকাউন্ট">
+         <font>
+            <Font name="SolaimanLipi" size="26.0" />
+         </font>
+      </Text>
+      <GridPane alignment="TOP_CENTER" hgap="15.0" maxWidth="-Infinity" prefHeight="100.0" prefWidth="400.0" vgap="10.0">
+         <children>
+            <Label text="নাম">
+               <font>
+                  <Font name="SolaimanLipi" size="14.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="username" minWidth="309.0" prefWidth="150.0" promptText="Select name" GridPane.columnIndex="1" />
+            <Label text="পাসওয়ার্ড" GridPane.rowIndex="1">
+               <font>
+                  <Font name="SolaimanLipi" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="password" promptText="Password" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteStaf" text="ডিলিট করুন">
+                     <font>
+                        <Font name="SolaimanLipi" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="updateBtn" mnemonicParsing="false" onAction="#updateStaf" text="এডিট করুন">
+                     <font>
+                        <Font name="SolaimanLipi" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+         <columnConstraints>
+            <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="394.0" minWidth="10.0" prefWidth="135.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="636.0" minWidth="10.0" prefWidth="365.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <VBox.margin>
+            <Insets left="150.0" right="150.0" />
+         </VBox.margin>
+      </GridPane>
+   </children>
+</VBox>

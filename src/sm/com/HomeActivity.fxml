@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="800.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm.com.HomeCtrl">
+   <children>
+      <MenuBar fx:id="menu">
+         <menus>
+            <Menu mnemonicParsing="false" text="File">
+               <items>
+                  <MenuItem fx:id="close" mnemonicParsing="false" onAction="#close" text="Close" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+               <items>
+                  <MenuItem fx:id="about" mnemonicParsing="false" onAction="#about" text="About" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="বিসমিল্লাহির রাহমানির রাহিম" textAlignment="CENTER">
+         <font>
+            <Font name="SolaimanLipi" size="16.0" />
+         </font>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </Text>
+      <Text layoutX="224.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="জেবিএস সেন্টার" textAlignment="CENTER">
+         <font>
+            <Font name="SolaimanLipi" size="33.0" />
+         </font>
+      </Text>
+      <Text layoutX="211.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="কাশিনাথপুর, পাবনা" textAlignment="CENTER">
+         <font>
+            <Font name="SolaimanLipi" size="16.0" />
+         </font>
+      </Text>
+      <Button fx:id="dailySales" minWidth="200.0" mnemonicParsing="false" onAction="#DailySales" text="দৈনিক হিসাব">
+         <font>
+            <Font name="SolaimanLipi" size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets top="40.0" />
+         </VBox.margin>
+      </Button>
+      <Button minWidth="200.0" mnemonicParsing="false" onAction="#RegularCustomer" text="নিয়মিত ক্রেতা">
+         <font>
+            <Font name="SolaimanLipi" size="18.0" />
+         </font>
+      </Button>
+      <Button minWidth="200.0" mnemonicParsing="false" text="স্টোরেজ">
+         <font>
+            <Font name="SolaimanLipi" size="18.0" />
+         </font>
+      </Button>
+      <Button minWidth="200.0" mnemonicParsing="false" text="কারখানা">
+         <font>
+            <Font name="SolaimanLipi" size="18.0" />
+         </font>
+      </Button>
+      <Button minWidth="200.0" mnemonicParsing="false" onAction="#AccountManager" text="অ্যাকাউন্ট ম্যানেজার">
+         <font>
+            <Font name="SolaimanLipi" size="18.0" />
+         </font>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </Button>
+      <Button minWidth="200.0" mnemonicParsing="false" text="অন্যান্য">
+         <font>
+            <Font name="SolaimanLipi" size="18.0" />
+         </font>
+      </Button>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Developed By: Shihab Mridha" textAlignment="CENTER">
+         <VBox.margin>
+            <Insets top="50.0" />
+         </VBox.margin>
+      </Text>
+   </children>
+</VBox>
