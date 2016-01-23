@@ -2,7 +2,6 @@ package sm.daily;
 
 import java.net.URL;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -54,11 +53,16 @@ public class DailySalesCtrl implements Initializable{
 	private Button deleteTransactionBtn;
 
 	@FXML
-	private DatePicker datePicker;
+	private DatePicker datePicker1;
 	@FXML
 	private DatePicker datePicker2;
 	@FXML
 	private ComboBox <String> producSelect;
+	@FXML
+	private ComboBox <String> priceSelect;
+
+	@FXML
+	private TextField price;
 	@FXML
 	private TextField quantity;
 	@FXML
@@ -77,15 +81,15 @@ public class DailySalesCtrl implements Initializable{
 	@FXML
 	private TableColumn<DailySalesTableData, String> productColumn;
 	@FXML
-	private TableColumn<DailySalesTableData, Integer> quantityColumn;
+	private TableColumn<DailySalesTableData, Double> quantityColumn;
 	@FXML
-	private TableColumn<DailySalesTableData, Integer> priceColumn;
+	private TableColumn<DailySalesTableData, Double> priceColumn;
 	@FXML
-	private TableColumn<DailySalesTableData, Integer> totalColumn;
+	private TableColumn<DailySalesTableData, Double> totalColumn;
 	@FXML
-	private TableColumn<DailySalesTableData, Integer> depositColumn;
+	private TableColumn<DailySalesTableData, Double> depositColumn;
 	@FXML
-	private TableColumn<DailySalesTableData, Integer> restColumn;
+	private TableColumn<DailySalesTableData, Double> restColumn;
 	@FXML
 	private TableColumn<DailySalesTableData, String> checkColumn;
 	@FXML
@@ -139,37 +143,52 @@ public class DailySalesCtrl implements Initializable{
 		LocalDate dated = datePicker2.getValue();
 		String date = dated.toString();
 		String status = "নগদ";
-		int theRate = 0;
-		int theStorage = 0;
+		if(check.isSelected()){
+			status = "বাকী";
+		}
+
+		double theRate = 0;
+		double theStorage = 0;
+		double theQuantity = 0;
+		double total = 0;
+		double theDeposit = 0;
 
 		DatabaseConnection ob = new DatabaseConnection();
 		ob.setQuery(ob.connect().createStatement());
-		ResultSet rs = ob.getQuery().executeQuery("SELECT product_price,product_storage FROM products WHERE product_name='"+producSelect.getValue()+"';");
-		if(rs.next()){
-			theRate = Integer.parseInt(rs.getString("product_price"));
-			theStorage = Integer.parseInt(rs.getString("product_storage"));
+
+		ResultSet rs = ob.getQuery().executeQuery("SELECT product_price1,product_price2,product_storage FROM products WHERE product_name='"+producSelect.getValue()+"';");
+		if(price.getText().equals("")){
+			if(rs.next()){
+				if(priceSelect.getValue().equals("Price 1")){
+					theRate = rs.getDouble("product_price1");
+				}else{
+					theRate = rs.getDouble("product_price2");
+				}
+				theStorage = rs.getDouble("product_storage");
+			}
+		}else{
+			theRate = Double.parseDouble(price.getText());
+			theStorage = rs.getDouble("product_storage");
 		}
 		rs.close();
 
 
-		int theQuantity = Integer.parseInt(quantity.getText());
+		theQuantity = Double.parseDouble(quantity.getText());
 
-		theStorage = theStorage - theQuantity;
+		total = theQuantity*theRate;
 
-		int total = theQuantity*theRate;
-		int theDeposit;
+		theDeposit = 0;
 
-		if(deposit.getText().equals("")){
-			theDeposit = 0;
-		}else{
-			theDeposit = Integer.parseInt(deposit.getText());
+		if(!check.isSelected()){
+			theDeposit = total;
+		}
+		else{
+			if(!deposit.getText().equals("")){
+				theDeposit = Double.parseDouble(deposit.getText());
+			}
 		}
 
-		int theRest = total - theDeposit;
-
-		if(check.isSelected()){
-			status = "বাকী";
-		}
+		double theRest = total - theDeposit;
 
 		if(theStorage < theQuantity){
 			Alert alert = new Alert(AlertType.ERROR);
@@ -178,8 +197,19 @@ public class DailySalesCtrl implements Initializable{
 			alert.setContentText("Not enough product in storage.");
 			alert.showAndWait();
 		}else{
+			theStorage = theStorage - theQuantity;
+			total = GlobalFunctions.round(total, 2);
+			theDeposit = GlobalFunctions.round(theDeposit, 2);
+
 			ob.puts("UPDATE products SET product_storage='"+theStorage+"' WHERE product_name='"+producSelect.getValue()+"';");
-			ob.puts("INSERT INTO daily_sells (date,product,quantity,price,total,deposit,rest,status) VALUES('"+date+"','"+producSelect.getValue()+"','"+theQuantity+"','"+theRate+"','"+total+"','"+theDeposit+"','"+theRest+"','"+status+"');");
+			ob.puts("INSERT INTO daily_sells (date,product,quantity,price,total,deposit,rest,status) VALUES('"+date+"',"
+					+ "'"+producSelect.getValue()+"',"
+							+ "'"+theQuantity+"',"
+									+ "'"+theRate+"',"
+											+ "'"+total+"',"
+													+ "'"+theDeposit+"',"
+															+ "'"+theRest+"',"
+																	+ "'"+status+"');");
 
 			int theTrans = 0;
 			ResultSet rt= ob.getQuery().executeQuery("select trans_id from daily_sells order by trans_id desc limit 1;");
@@ -206,15 +236,14 @@ public class DailySalesCtrl implements Initializable{
 		if (result.get() == ButtonType.OK){
 			DailySalesTableData thedata = table.getSelectionModel().getSelectedItem();
 			tableData.remove(thedata);
-			int theStorage = 0;
-
+			double theStorage = 0;
 
 			DatabaseConnection db = new DatabaseConnection();
 			db.setQuery(db.connect().createStatement());
 
 			ResultSet rs = db.getQuery().executeQuery("select product_storage from products where product_name = '"+thedata.getProduct()+"';");
 			if(rs.next()){
-				theStorage = Integer.parseInt(rs.getString("product_storage"));
+				theStorage = rs.getDouble("product_storage");
 			}
 			rs.close();
 
@@ -222,6 +251,7 @@ public class DailySalesCtrl implements Initializable{
 
 			db.puts("UPDATE products SET product_storage='"+theStorage+"' WHERE product_name='"+thedata.getProduct()+"';");
 			db.puts("DELETE FROM daily_sells WHERE trans_id='"+thedata.getTrans()+"'");
+
 			db.connect().close();
 
 		} else {
@@ -236,12 +266,12 @@ public class DailySalesCtrl implements Initializable{
 	private void dateData() throws Exception{
 		tableData.removeAll(tableData);
 		String date = null;
-		if(datePicker.getValue() == null){
+		if(datePicker1.getValue() == null){
 			 DateFormat theFormat = new SimpleDateFormat("yyyy-MM-dd");
 			 Date theDate = new Date();
 			 date =  theFormat.format(theDate);
 		}else{
-			LocalDate dated = datePicker.getValue();
+			LocalDate dated = datePicker1.getValue();
 			date = dated.toString();
 		}
 
@@ -249,31 +279,30 @@ public class DailySalesCtrl implements Initializable{
 		ob.setQuery(ob.connect().createStatement());
 		ResultSet rs = ob.getQuery().executeQuery("SELECT * FROM daily_sells WHERE date='"+date+"'");
 		while (rs.next()) {
-			int theRate = Integer.parseInt(rs.getString("price"));
-			int theQuantity = Integer.parseInt(rs.getString("quantity"));
-			int theTotal = Integer.parseInt(rs.getString("total"));
-			int theDeposit = Integer.parseInt(rs.getString("deposit"));
-			int theRest = Integer.parseInt(rs.getString("rest"));
-			int theTrans = Integer.parseInt(rs.getString("trans_id"));
+			double theRate = rs.getDouble("price");
+			double theQuantity = rs.getDouble("quantity");
+			double theTotal = rs.getDouble("total");
+			double theDeposit = rs.getDouble("deposit");
+			double theRest = rs.getDouble("rest");
+			int theTrans = rs.getInt("trans_id");
 			tableData.add(new DailySalesTableData(rs.getString("date"), rs.getString("product"), theQuantity, theRate, theTotal, theDeposit,theRest,theTrans,rs.getString("status")));
 		}
 		rs.close();
 		ob.connect().close();
 	}
 
-	private void getProduct(){
+	private void getProduct() throws Exception{
 		DatabaseConnection ob = new DatabaseConnection();
-		try {
-			ob.setQuery(ob.connect().createStatement());
-			ResultSet rs = ob.getQuery().executeQuery("select product_name from products;");
-			while(rs.next()){
-				productList.add(rs.getString("product_name"));
-			}
-			rs.close();
-			ob.connect().close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+
+		ob.setQuery(ob.connect().createStatement());
+		ResultSet rs = ob.getQuery().executeQuery("select product_name from products;");
+		while(rs.next()){
+			productList.add(rs.getString("product_name"));
 		}
+		rs.close();
+
+		ob.connect().close();
+
 		producSelect.getItems().addAll(productList);
 	}
 
@@ -286,19 +315,24 @@ public class DailySalesCtrl implements Initializable{
 		}
 		dateColumn.setCellValueFactory(cellData->new ReadOnlyStringWrapper(cellData.getValue().getdate()));
 		productColumn.setCellValueFactory(cellData->new ReadOnlyStringWrapper(cellData.getValue().getProduct()));
-		quantityColumn.setCellValueFactory(cellData->new ReadOnlyObjectWrapper<Integer>(cellData.getValue().getQuantity()));
-		priceColumn.setCellValueFactory(cellData->new ReadOnlyObjectWrapper<Integer>(cellData.getValue().getRate()));
-		totalColumn.setCellValueFactory(cellData->new ReadOnlyObjectWrapper<Integer>(cellData.getValue().getTotalPrice()));
-		depositColumn.setCellValueFactory(cellData->new ReadOnlyObjectWrapper<Integer>(cellData.getValue().getDeposit()));
-		restColumn.setCellValueFactory(cellData->new ReadOnlyObjectWrapper<Integer>(cellData.getValue().getRest()));
+		quantityColumn.setCellValueFactory(cellData->new ReadOnlyObjectWrapper<Double>(cellData.getValue().getQuantity()));
+		priceColumn.setCellValueFactory(cellData->new ReadOnlyObjectWrapper<Double>(cellData.getValue().getRate()));
+		totalColumn.setCellValueFactory(cellData->new ReadOnlyObjectWrapper<Double>(cellData.getValue().getTotalPrice()));
+		depositColumn.setCellValueFactory(cellData->new ReadOnlyObjectWrapper<Double>(cellData.getValue().getDeposit()));
+		restColumn.setCellValueFactory(cellData->new ReadOnlyObjectWrapper<Double>(cellData.getValue().getRest()));
 		transColumn.setCellValueFactory(cellData->new ReadOnlyObjectWrapper<Integer>(cellData.getValue().getTrans()));
 		checkColumn.setCellValueFactory(cellData->new ReadOnlyStringWrapper(cellData.getValue().getStatus()));
 		table.setItems(getPersonData());
 
-		getProduct();
+		try {
+			getProduct();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-		datePicker.setPromptText(dateFormat.format(dated));
+		datePicker1.setPromptText(dateFormat.format(dated));
 		datePicker2.setPromptText(dateFormat.format(dated));
+		priceSelect.getItems().addAll("Price 1", "Price 2");
 	}
 
 	public ObservableList<DailySalesTableData> getPersonData() {

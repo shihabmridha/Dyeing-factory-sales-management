@@ -1,6 +1,8 @@
 package sm.defaults;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -8,22 +10,22 @@ import javafx.beans.property.StringProperty;
 public class DailySalesTableData {
 	private final StringProperty date;
 	private final StringProperty product;
-	private final IntegerProperty quantity;
-	private final IntegerProperty rate;
-	private final IntegerProperty totalPrice;
-	private final IntegerProperty deposit;
-	private final IntegerProperty rest;
+	private final DoubleProperty quantity;
+	private final DoubleProperty rate;
+	private final DoubleProperty totalPrice;
+	private final DoubleProperty deposit;
+	private final DoubleProperty rest;
 	private final IntegerProperty transID;
 	private final StringProperty status;
 
-	public DailySalesTableData(String date,String product, int quantity, int rate, int totalPrice,int deposit,int rest,int transID, String status){
+	public DailySalesTableData(String date,String product, double quantity, double rate, double totalPrice,double deposit,double rest,int transID, String status){
 		this.date = new SimpleStringProperty(date);
 		this.product = new SimpleStringProperty(product);
-		this.quantity = new SimpleIntegerProperty(quantity);
-		this.rate = new SimpleIntegerProperty(rate);
-		this.totalPrice = new SimpleIntegerProperty(totalPrice);
-		this.deposit = new SimpleIntegerProperty(deposit);
-		this.rest = new SimpleIntegerProperty(rest);
+		this.quantity = new SimpleDoubleProperty(quantity);
+		this.rate = new SimpleDoubleProperty(rate);
+		this.totalPrice = new SimpleDoubleProperty(totalPrice);
+		this.deposit = new SimpleDoubleProperty(deposit);
+		this.rest = new SimpleDoubleProperty(rest);
 		this.transID = new SimpleIntegerProperty(transID);
 		this.status = new SimpleStringProperty(status);
 	}
@@ -46,7 +48,7 @@ public class DailySalesTableData {
 	public void setQuantity(int quantity) {
 		this.quantity.set(quantity);
 	}
-	public int getQuantity() {
+	public double getQuantity() {
 		return quantity.get();
 	}
 
@@ -54,7 +56,7 @@ public class DailySalesTableData {
 	public void setRate(int rate) {
 		this.rate.set(rate);
 	}
-	public int getRate() {
+	public double getRate() {
 		return rate.get();
 	}
 
@@ -62,14 +64,14 @@ public class DailySalesTableData {
 	public void setTotalPrice(int totalPrice) {
 		this.totalPrice.set(totalPrice);
 	}
-	public int getTotalPrice() {
+	public double getTotalPrice() {
 		return totalPrice.get();
 	}
 
 	public void setDeposit(int deposit) {
 		this.deposit.set(deposit);
 	}
-	public int getDeposit() {
+	public double getDeposit() {
 		return deposit.get();
 	}
 
@@ -83,7 +85,7 @@ public class DailySalesTableData {
 	public void setRest(int rest) {
 		this.rest.set(rest);
 	}
-	public int getRest() {
+	public double getRest() {
 		return rest.get();
 	}
 

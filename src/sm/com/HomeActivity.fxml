@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
 <?import java.lang.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="800.0" spacing="10.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sm.com.HomeCtrl">
    <children>
@@ -63,7 +63,7 @@
             <Font name="SolaimanLipi" size="18.0" />
          </font>
       </Button>
-      <Button minWidth="200.0" mnemonicParsing="false" onAction="#AccountManager" text="অ্যাকাউন্ট ম্যানেজার">
+      <Button fx:id="accountManagerBtn" minWidth="200.0" mnemonicParsing="false" onAction="#AccountManager" text="অ্যাকাউন্ট ম্যানেজার">
          <font>
             <Font name="SolaimanLipi" size="18.0" />
          </font>
@@ -71,9 +71,9 @@
             <Insets />
          </VBox.margin>
       </Button>
-      <Button minWidth="200.0" mnemonicParsing="false" text="অন্যান্য">
+      <Button minWidth="200.0" mnemonicParsing="false" onAction="#logout" text="LOG OUT">
          <font>
-            <Font name="SolaimanLipi" size="18.0" />
+            <Font name="System Bold" size="18.0" />
          </font>
       </Button>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Developed By: Shihab Mridha" textAlignment="CENTER">

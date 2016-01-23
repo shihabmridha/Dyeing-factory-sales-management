@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuBar;
 import javafx.stage.Stage;
+import sm.defaults.AutoCompleteComboBoxListener;
 import sm.defaults.DatabaseConnection;
 import sm.defaults.GlobalFunctions;
 
@@ -104,6 +105,7 @@ public class CustomerHomeCtrl implements Initializable{
 		nameList.clear();
 		viewBtn.setVisible(false);
 		getName();
+		customerName.setDisable(false);
 	}
 
 	int theId;
@@ -140,6 +142,8 @@ public class CustomerHomeCtrl implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		getAddress();
+		customerName.setDisable(true);
+		new AutoCompleteComboBoxListener<String>(customerName);
 		viewBtn.setVisible(false);
 	}
 

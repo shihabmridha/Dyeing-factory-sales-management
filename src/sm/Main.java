@@ -4,7 +4,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import sm.defaults.DatabaseConnection;
+
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+
 
 public class Main extends Application {
 	@Override
@@ -25,13 +28,14 @@ public class Main extends Application {
 		    System.exit(0);
 		}
 
-
 		try {
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/sm/com/HomeActivity.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/sm/com/LoginForm.fxml"));
 			primaryStage.setScene(new Scene(loader.load()));
-			primaryStage.setTitle("Jobbar Bostro Somvar");
+			primaryStage.setTitle("Please Login");
+			primaryStage.setResizable(false);
+			primaryStage.getIcons().add(new Image("/resource/img/ico.png"));
 			primaryStage.show();
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

@@ -1,0 +1,26 @@
+@font-face {
+    font-family: SolaimanLipi;
+    src: url('/resource/font/SolaimanLipi.ttf');
+}
+
+.table-view .column-header .label{
+    -fx-font-size: 12pt;
+    -fx-font-family: "SolaimanLipi";
+}
+.menu-bar .label{
+	-fx-font-size: 10pt;
+	-fx-font-family: "Arial";
+}
+
+.table-view .table-row-cell {
+	-fx-font-size: 11pt;
+
+}
+
+.combo-box{
+	-fx-font-size: 11pt;
+}
+
+.theFont{
+	-fx-font-family: "SolaimanLipi";
+}

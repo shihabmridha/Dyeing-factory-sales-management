@@ -49,11 +49,40 @@ public class DatabaseConnection {
 
 	public void createTable(){
 		puts("CREATE TABLE staf(staf_id INTEGER PRIMARY KEY AUTOINCREMENT,username TEXT not null, password TEXT not null);");
-		puts("CREATE TABLE products(product_id INTEGER PRIMARY KEY AUTOINCREMENT,product_name TEXT not null, product_price INT default 0, product_storage INT default 0);");
+
+		puts("CREATE TABLE products("
+				+ "product_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+				+ "product_name TEXT not null,"
+				+ "product_price1 REAL default 0,"
+				+ "product_price2 REAL default 0,"
+				+ "product_storage REAL default 0); ");
+
 		puts("CREATE TABLE address (address_id INTEGER primary key autoincrement, address_name text not null);");
 		puts("CREATE TABLE customers(customer_id INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT not null, address INT not null, mobile TEXT not null);");
-		puts("CREATE TABLE customers_data(trans_id INTEGER PRIMARY KEY AUTOINCREMENT,customer_id INT not null, date TEXT not null, product TEXT not null, quantity INT not null, price INT not null, total INT not null, deposit INT not null,rest INT not null, status TEXT not null);");
-		puts("CREATE TABLE daily_sells(trans_id INTEGER PRIMARY KEY AUTOINCREMENT, date TEXT not null, product TEXT not null, quantity INT not null, price INT not null, total INT not null, deposit INT not null,rest INT not null, status TEXT not null);");
+
+		puts("CREATE TABLE customers_data("
+				+ "trans_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+				+ "customer_id INT not null,"
+				+ "date TEXT not null,"
+				+ "product TEXT not null,"
+				+ "quantity REAL not null,"
+				+ "price REAL not null,"
+				+ "total REAL not null,"
+				+ "deposit REAL not null,"
+				+ "rest REAL not null, "
+				+ "status TEXT not null); ");
+
+		puts("CREATE TABLE daily_sells("
+				+ "trans_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+				+ "date TEXT not null,"
+				+ "product TEXT not null,"
+				+ "quantity REAL not null,"
+				+ "price REAL not null,"
+				+ "total REAL not null,"
+				+ "deposit REAL not null,"
+				+ "rest REAL not null,"
+				+ "status TEXT not null); ");
+
 		puts("insert into staf (username,password) values ('admin','123')");
 	}
 

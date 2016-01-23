@@ -35,8 +35,15 @@ public class AdminManageProduct implements Initializable{
 	@FXML
 	private TextField quantity;
 	@FXML
-	private TextField price;
+	private TextField price1;
+	@FXML
+	private TextField price2;
 
+
+	@FXML
+	private Button currentStoreBtn;
+	@FXML
+	private Button currentPriceBtn;
 	@FXML
 	private Button manageBtn1;
 	@FXML
@@ -74,7 +81,8 @@ public class AdminManageProduct implements Initializable{
 	/********************************
 	 * CORE
 	 *******************************/
-	int proQuantity,proPrice;
+	int proQuantity;
+	double proPrice1,proPrice2;
 
 	@FXML
 	private void manageQuantity() throws Exception{
@@ -104,15 +112,18 @@ public class AdminManageProduct implements Initializable{
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle("ERROR");
 		alert.setHeaderText(null);
-		if(product2.getSelectionModel().getSelectedItem() == null || price.getText().equals("")){
+		if(product2.getSelectionModel().getSelectedItem() == null || price1.getText().equals("") || price2.getText().equals("")){
 			alert.setContentText("Check inputs please.");
 			alert.showAndWait();
 		}else{
 			getData(product2.getValue().toString());
-			int total = Integer.parseInt(price.getText());
 
 			DatabaseConnection ob = new DatabaseConnection();
-			ob.puts("UPDATE products SET product_price='"+total+"' WHERE product_name='"+product2.getValue()+"';");
+			double pr1 = Double.parseDouble(price1.getText().toString());
+			double pr2 = Double.parseDouble(price2.getText());
+			System.out.println(price1.getText() + " : " + price2.getText());
+			System.out.println("Pro1: " + pr1 + "\n" + "Pro2: " + pr2);
+			ob.puts("UPDATE products SET product_price1='"+pr1+"',product_price2='"+pr2+"' WHERE product_name='"+product2.getValue()+"';");
 			ob.connect().close();
 
 			alert.setAlertType(AlertType.INFORMATION);
@@ -122,14 +133,68 @@ public class AdminManageProduct implements Initializable{
 		}
 	}
 
+
+	@FXML
+	private void getCurrentStorage() throws Exception{
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setHeaderText(null);
+		alert.setTitle("STORAGE INFO");
+
+		if(product1.getSelectionModel().getSelectedItem() == null){
+			alert.setAlertType(AlertType.ERROR);
+			alert.setTitle("ERROR");
+			alert.setContentText("Select product please.");
+			alert.showAndWait();
+		}else{
+			getData(product1.getValue());
+			alert.setContentText("You have " + proQuantity + " " + product1.getValue() + " in storage.");
+			alert.showAndWait();
+		}
+
+
+
+	}
+
+	@FXML
+	private void getCurrentPrice() throws Exception{
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setHeaderText(null);
+		alert.setTitle("PRICE INFO");
+
+		if(product2.getSelectionModel().getSelectedItem() == null){
+			alert.setAlertType(AlertType.ERROR);
+			alert.setTitle("ERROR");
+			alert.setContentText("Select product please.");
+			alert.showAndWait();
+		}else{
+			getData(product2.getValue());
+			alert.setContentText("Current price of " + product2.getValue() + " is:\n" + "Price 1: " + proPrice1 + "\nPrice 2: " + proPrice2 );
+			alert.showAndWait();
+		}
+	}
+
+
+	@FXML
+	private void getData(){
+		getData("");
+	}
+
+
 	private void getData(String pro){
+		if(pro.equals("")){
+			pro = product2.getValue();
+		}
+
 		DatabaseConnection ob = new DatabaseConnection();
 		try {
 			ob.setQuery(ob.connect().createStatement());
-			ResultSet rs = ob.getQuery().executeQuery("SELECT product_storage,product_price FROM products WHERE product_name='"+pro+"';");
+			ResultSet rs = ob.getQuery().executeQuery("SELECT product_storage,product_price1,product_price2 FROM products WHERE product_name='"+pro+"';");
 			if(rs.next()){
-				proQuantity = Integer.parseInt(rs.getString("product_storage"));
-				proPrice = Integer.parseInt(rs.getString("product_price"));
+				proQuantity = rs.getInt("product_storage");
+				proPrice1 = rs.getDouble("product_price1");
+				proPrice2 = rs.getDouble("product_price2");
+				price1.setPromptText(Double.toString(proPrice1));
+				price2.setPromptText(Double.toString(proPrice2));
 			}
 			rs.close();
 			ob.connect().close();
